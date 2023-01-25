@@ -24,20 +24,21 @@ var options = {
 }
 app.use(express.static('public', options))
 
+const words = ['salad','importance','client','editor','county','speaker','affair','music','examination','housing','permission','mixture','software','success','bird','uncle','competition','supermarket','strategy','perception','internet','instance','problem','independence','version','paper','politics','collection','recommendation','stranger','setting','topic','preparation','pizza','property','marriage','indication','audience','hall','dad','series','depression','tennis','performance','owner','concept','resource','poetry','chocolate','failure','agency','bath','chest','homework','combination','analysis','injury','replacement','highway','engine','championship','communication','message','cheek','method','decision','temperature','independence','television','math','hair','assistant','year','player','explanation','series','selection','girlfriend','magazine','activity','difficulty','sir','tale','wood','employment','failure','warning','session','throat','editor','response','medicine','photo','winner','perception','wedding','product','population','argument','enthusiasm'];
+
 // #############################################################################
 // Catch all handler for all other request.
 app.use('*', (req,res) => {
-  res.json({
-      at: new Date().toISOString(),
-      method: req.method,
-      hostname: req.hostname,
-      ip: req.ip,
-      query: req.query,
-      headers: req.headers,
-      cookies: req.cookies,
-      params: req.params
+  if(req.params[0] === '/random')
+  {
+    res.json({
+      multiple: Math.floor(Math.random() * 30) + 1,
+      word: words[Math.floor(Math.random() * words.length)]
     })
-    .end()
+    .end();
+    return;
+  }
+  res.status(404).send('Not found');
 })
 
 module.exports = app
